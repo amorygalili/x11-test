@@ -1,0 +1,14 @@
+services:
+  desktop:
+    build: .
+    image: x11-test
+    init: true
+    shm_size: 256m
+    restart: unless-stopped
+    ports:
+      # Bound to loopback: the connection is unencrypted and has no password by default.
+      - "127.0.0.1:6080:6080"
+    environment:
+      VNC_RESOLUTION: ${VNC_RESOLUTION:-1280x800}
+      # Optional. VNC authentication only uses the first 8 characters.
+      VNC_PASSWORD: ${VNC_PASSWORD:-}

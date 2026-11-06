@@ -1,0 +1,26 @@
+services:
+  base:
+    build:
+      context: .
+      dockerfile: docker/base.Dockerfile
+
+  desktop:
+    build:
+      context: .
+      dockerfile: docker/desktop.Dockerfile
+      additional_contexts:
+        base: service:base
+
+  vnc:
+    build:
+      context: .
+      dockerfile: docker/vnc.Dockerfile
+      additional_contexts:
+        desktop: service:desktop
+
+  app:
+    build:
+      context: .
+      dockerfile: docker/app.Dockerfile
+      additional_contexts:
+        vnc: service:vnc
